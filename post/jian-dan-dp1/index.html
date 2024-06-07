@@ -1,0 +1,274 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>简单 dp(1) | Elaina&#39;s blog</title>
+
+<link rel="shortcut icon" href="https://elaina.mip001.top/favicon.ico?v=1717758031060">
+
+<link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://elaina.mip001.top/styles/main.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"> -->
+
+<script src="https://cdn.jsdelivr.net/npm/@highlightjs/cdn-assets/highlight.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/highlight.js/9.12.0/languages//dart.min.js"></script>
+
+<!-- <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script> -->
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"></script> -->
+<!-- DEMO JS -->
+<!--<script src="media/scripts/index.js"></script>-->
+
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.css">
+    
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="/">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            Elaina&#39;s blog
+        </div>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" id="changeNavbar">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+            <div class="nav-item">
+                
+                <a href="/" class="menu gt-a-link">
+                    首页
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/archives" class="menu gt-a-link">
+                    归档
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/tags" class="menu gt-a-link">
+                    标签
+                </a>
+                
+            </div>
+            
+            <div class="nav-item">
+                
+                <a href="/post/about" class="menu gt-a-link">
+                    关于
+                </a>
+                
+            </div>
+            
+        </div>
+        <div style="text-align: center">
+            <form id="gridea-search-form" style="position: relative" data-update="1717758031060"
+                action="/search/">
+                <input class="search-input" autocomplete="off" spellcheck="false" name="q" placeholder="搜索文章" />
+                <i class="fas fa-search gt-c-content-color-first" style="position: absolute; top: 9px; left: 10px;"></i>
+            </form>
+        </div>
+    </div>
+</nav>
+<script>
+    /* 移动端导航栏展开/收起切换 */
+    document.getElementById('changeNavbar').onclick = () => {
+        var element = document.getElementById('navbarSupportedContent');
+        if (element.style.display === 'none' || element.style.display === '') {
+            element.style.display = 'block';
+        } else {
+            element.style.display = 'none';
+        }
+    }
+</script>
+
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    简单 dp(1)
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2023-10-17 ·
+                    </time>
+                    
+                </div>
+                <div class="post-content">
+                    <h2 id="第一节动态规划的定义">第一节:动态规划的定义</h2>
+<h3 id="10-动态规划的引出">1.0: 动态规划的引出</h3>
+<p>相信大家都学过搜索吧，但是大家在使用搜索解某些题的时候，有没有发现一个问题：搜索的效率太低了。</p>
+<p>这时候，我们就可以引出一种新的算法：动态规划。</p>
+<h3 id="11-什么是动态规划">1.1: 什么是动态规划</h3>
+<p>动态规划（简称 DP），是一种在数学、管理科学、计算机科学、经济学和生物信息学中使用的，通过把原问题分解为相对简单的子问题的方式求解复杂问题的方法。</p>
+<p>说人话就是：当我们遇到一个很难直接解决的的大问题时，把它分解成一个个可以直接解决的小问题，再通过这些小问题的答案，从而求出大问题的解。</p>
+<p>下面举一个例子：</p>
+<blockquote>
+<p>有一天，小K问小E :“你可以求出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn></mrow><annotation encoding="application/x-tex">114514+114514</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span></span></span></span> 的值吗?”</p>
+</blockquote>
+<blockquote>
+<p>小E想了一会说：“等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>229028</mn></mrow><annotation encoding="application/x-tex">229028</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mord">9</span><span class="mord">0</span><span class="mord">2</span><span class="mord">8</span></span></span></span> 。”</p>
+</blockquote>
+<blockquote>
+<p>小K又问小E:“那你可以求出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">114514+114514+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 的值吗？”</p>
+</blockquote>
+<blockquote>
+<p>小E几乎马上就回答：“等于 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>229029</mn></mrow><annotation encoding="application/x-tex">229029</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mord">9</span><span class="mord">0</span><span class="mord">2</span><span class="mord">9</span></span></span></span> 。”</p>
+</blockquote>
+<blockquote>
+<p>小K很奇怪地问：“这次为什么你这么快就回答了问题呢？”</p>
+</blockquote>
+<blockquote>
+<p>小E说：“因为我已经知道 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn></mrow><annotation encoding="application/x-tex">114514+114514</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span></span></span></span> 的值了，我只需要在原基础上加上一就可以了”</p>
+</blockquote>
+<p>小E解决小K第二个问题的过程其实就可以看成动态规划的过程。</p>
+<p>那么我们来分析一下小 E 动态规划的过程。</p>
+<p>首先，她把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">114514+114514+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 这个大问题拆分为了 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn></mrow><annotation encoding="application/x-tex">114514+114514</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span></span></span></span> 和 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">+</span><span class="mord">1</span></span></span></span> 这两个子问题。</p>
+<p>接着，她发现 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn></mrow><annotation encoding="application/x-tex">114514+114514</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span></span></span></span> 的答案已经知道了，所以把这个子问题的答案和另一个子问题的答案结合，就得到了：</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>114514</mn><mo>+</mo><mn>114514</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">114514+114514+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mord">1</span><span class="mord">4</span><span class="mord">5</span><span class="mord">1</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>229028</mn><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">=229028+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mord">9</span><span class="mord">0</span><span class="mord">2</span><span class="mord">8</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span></p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>=</mo><mn>229029</mn></mrow><annotation encoding="application/x-tex">=229029</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.36687em;vertical-align:0em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">2</span><span class="mord">9</span><span class="mord">0</span><span class="mord">2</span><span class="mord">9</span></span></span></span></p>
+<h3 id="12-动态规划的元素">1.2: 动态规划的元素</h3>
+<ol>
+<li>
+<p>最优化原理（最优子结构性质）:最优化原理可这样阐述：一个最优化策略具有这样的性质，不论过去状态和决策如何，对前面的决策所形成的状态而言，余下的诸决策必须构成最优策略。简而言之，一个最优化策略的子策略总是最优的。一个问题满足最优化原理又称其具有最优子结构性质。</p>
+</li>
+<li>
+<p>无后效性：将各阶段按照一定的次序排列好之后，对于某个给定的阶段状态，它以前各阶段的状态无法直接影响它未来的决策，而只能通过当前的这个状态。换句话说，每个状态都是过去历史的一个完整总结。这就是无后向性，又称为无后效性。</p>
+</li>
+<li>
+<p><strong>状态转移方程</strong>：这是动态规划的核心，表示是动态规划中本阶段的状态与上一阶段状态和上一阶段决策的关系。动态规划问题的难点就是如何推出状态转移方程。</p>
+</li>
+</ol>
+<p>以上就是动态规划的基本定义，下面我们来看看如何实现。</p>
+<h2 id="第二节动态规划算法的实现">第二节：动态规划算法的实现</h2>
+<h3 id="20-例题引出1">2.0: 例题引出(1)</h3>
+<blockquote>
+<p><strong><a href="https://www.luogu.com.cn/problem/P1002"> (NOIP2002 普及组)  过河卒 </a></strong><br>
+棋盘上 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span> 点有一个过河卒，需要走到目标 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 点。卒行走的规则：可以向下、或者向右。同时在棋盘上  <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>C</mi></mrow><annotation encoding="application/x-tex">C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.07153em;">C</span></span></span></span> 点有一个对方的马，该马所在的点和所有跳跃一步可达的点称为对方马的控制点。因此称之为“马拦过河卒”。棋盘用坐标表示，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span> 点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 点 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mo separator="true">,</mo><mi>m</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(n,m)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mclose">)</span></span></span></span>，同样马的位置坐标是需要给出的。</p>
+</blockquote>
+<blockquote>
+<p>现在要求你计算出卒从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>A</mi></mrow><annotation encoding="application/x-tex">A</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault">A</span></span></span></span> 点能够到达 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>B</mi></mrow><annotation encoding="application/x-tex">B</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05017em;">B</span></span></span></span> 点的路径的条数，假设马的位置是固定不动的，并不是卒走一步马走一步。</p>
+</blockquote>
+<h3 id="21-例题解决1">2.1: 例题解决(1)</h3>
+<p>看到这道题可能同学们第一反应是搜索，但是我们不要急着下手，在实现之前，我们先分析一下算法的时间复杂度。</p>
+<p>如果暴力判断的话，每个格子都要分别向右和向下递归，时间复杂度为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><msup><mn>2</mn><mrow><mi>n</mi><mi>m</mi></mrow></msup><mo>)</mo></mrow><annotation encoding="application/x-tex">O(2^{nm})</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord">2</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.664392em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">n</span><span class="mord mathdefault mtight">m</span></span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
+<p>由此可见，暴力判断时间复杂度是指数级的，如数据稍微大一点，就会 <code>TLE</code> ,所以我们呢可以考虑一下动态规划的做法。</p>
+<p>看题，我们发现，如果从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 开始走，可能会面临数组越界的问题，所以我们不妨把每一个坐标都加上 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>1</mn></mrow><annotation encoding="application/x-tex">1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+<p>我们使用动态规划解决问题，第一步是确定状态，在这道题中，我们定义 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 为从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到第 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> 格的 <strong>路径条数</strong>。（本来应该是从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>0</mn><mo separator="true">,</mo><mn>0</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(0,0)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">0</span><span class="mclose">)</span></span></span></span> 开始走的，但是我们把所有坐标加了一）</p>
+<p>第二步，就是去推状态转移方程了。</p>
+<p>1 ：我们明确大问题：在马的拦截下，从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>n</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>m</mi><mo>+</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(n+1,m+1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8388800000000001em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 的路径条数。</p>
+<p>2 ：我们把大问题拆分为更小的子问题：我们把从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> 的路径条数，拆分为从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i-1,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> 的路径条数和从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>−</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(i,j-1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 的路径条数，这么拆下去，直到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 或 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">j=1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+<p>3 ：寻找状态之间的关系：通过 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>2</mn></mrow><annotation encoding="application/x-tex">2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>  可知，从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mn>1</mn><mo separator="true">,</mo><mn>1</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">1</span><span class="mclose">)</span></span></span></span> 走到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> 的路径条数，就是从原点走到这个格子上面的格子的路径条数加上从原点走到这个格子左边格子的路径条数之和。</p>
+<p>形式化地来讲，就是</p>
+<p class='katex-block'><span class="katex-display"><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub><mo>=</mo><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mi>j</mi></mrow></msub><mo>+</mo><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j}=dp_{i-1,j}+dp_{i,j-1}
+</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span></span></p>
+<p>那么我们的状态转移方程其实就推出来了。</p>
+<p>但是题目中路径是不可以经过马的控制点的，那么怎么办呢？</p>
+<p>其实也很简单，如果格子 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>i</mi><mo separator="true">,</mo><mi>j</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(i,j)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">)</span></span></span></span> 是马的控制点（包括马本身在的格子），那么我们把 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><msub><mi>p</mi><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow></msub></mrow><annotation encoding="application/x-tex">dp_{i,j}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.980548em;vertical-align:-0.286108em;"></span><span class="mord mathdefault">d</span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span> 标记为 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">0</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span></span></span></span> 就可以了。</p>
+<p>接下来就是代码实现了，我会把我的代码放在这里，但是请不要直接 <code>Ctrl+C</code>!</p>
+<p>注意最终答案可能会很大，记得使用 <code>long long</code>。</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+#define MAX(a,b) (a)&gt;(b)?(a):(b)
+typedef long long inti;
+using namespace std;
+inline inti read()
+{
+    inti x=0,f=1;
+    char ch=getchar();
+    while(ch&lt;'0'||ch&gt;'9')f=-1,ch=getchar();
+    while(ch&gt;='0' &amp;&amp; ch&lt;='9') x=x*10+ch-'0',ch=getchar();
+    return x*f;
+}//快读
+inti ans,dp[25][25];
+bool s[25][25];
+inti x,n=read(),y,m=read();
+int main()
+{
+    x=read(),y=read();
+    inti k[8]={x-2,x-1,x+1,x+2,x+2,x+1,x-1,x-2},kk[8]={y+1,y+2,y+2,y+1,y-1,y-2,y-2,y-1};
+    dp[1][0]=1;
+    s[x+1][y+1]=1;
+    for(int i=0;i&lt;8;i++) s[k[i]+1][kk[i]+1]=1;
+    for(int i=1;i&lt;=n+1;i++){
+        for(int j=1;j&lt;=m+1;j++){
+            if(s[i][j]) continue;
+            dp[i][j]=dp[i-1][j]+dp[i][j-1];
+        }
+    }
+	cout&lt;&lt;dp[n+1][m+1]&lt;&lt;endl;
+	return 0;
+}
+
+</code></pre>
+<p>如有错误，欢迎指正。</p>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://elaina.mip001.top/post/hello-gridea/" class="post-title gt-a-link">
+                    Hello Gridea
+                </a>
+            </div>
+        
+
+        
+
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">逸一时，误一世</div>
+    <div class="social-container">
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    <div class="footer-info">
+        ©2024 Elaina | 本博客所有文章除特别声明外，均采用 BY-SA 许可协议。转载请注明出处！
+    </div>
+    <div>
+        Theme <a href="https://github.com/imhanjie/gridea-theme-pure" target="_blank">Pure</a>, Powered by <a
+                href="https://gridea.dev" target="_blank">Gridea</a> | <a href="https://elaina.mip001.top/atom.xml" target="_blank">RSS</a>
+    </div>
+</div>
+
+<script>
+  hljs.highlightAll()
+</script>
+
+    </div>
+</div>
+</body>
+</html>
